@@ -113,6 +113,18 @@ equilibrium.</p></div>
 <dd>
 <div class="desc"><p>Return a 2D histogram with of the given weighted data, scaled by the bin sizes.</p></div>
 </dd>
+<dt id="PyPartMC.loss_rate"><code class="name flex">
+<span>def <span class="ident">loss_rate</span></span>(<span>arg0: _PyPartMC.Scenario, arg1: float, arg2: float, arg3: _PyPartMC.AeroData, arg4: _PyPartMC.EnvState) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Evaluate a loss rate function.</p></div>
+</dd>
+<dt id="PyPartMC.loss_rate_dry_dep"><code class="name flex">
+<span>def <span class="ident">loss_rate_dry_dep</span></span>(<span>arg0: float, arg1: float, arg2: _PyPartMC.AeroData, arg3: _PyPartMC.EnvState) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Compute and return the dry deposition rate for a given particle.</p></div>
+</dd>
 <dt id="PyPartMC.pow2_above"><code class="name flex">
 <span>def <span class="ident">pow2_above</span></span>(<span>arg0: int) ‑> int</span>
 </code></dt>
@@ -126,7 +138,7 @@ equilibrium.</p></div>
 <div class="desc"><p>Convert radius (m) to diameter (m).</p></div>
 </dd>
 <dt id="PyPartMC.run_part"><code class="name flex">
-<span>def <span class="ident">run_part</span></span>(<span>arg0: _PyPartMC.Scenario, arg1: _PyPartMC.EnvState, arg2: _PyPartMC.AeroData, arg3: _PyPartMC.AeroState, arg4: _PyPartMC.GasData, arg5: _PyPartMC.GasState, arg6: _PyPartMC.RunPartOpt)</span>
+<span>def <span class="ident">run_part</span></span>(<span>arg0: _PyPartMC.Scenario, arg1: _PyPartMC.EnvState, arg2: _PyPartMC.AeroData, arg3: _PyPartMC.AeroState, arg4: _PyPartMC.GasData, arg5: _PyPartMC.GasState, arg6: _PyPartMC.RunPartOpt, arg7: _PyPartMC.CampCore, arg8: _PyPartMC.Photolysis)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Do a particle-resolved Monte Carlo simulation.</p></div>
@@ -349,6 +361,18 @@ is typically cleared each time we output data to disk.</p>
 </dd>
 </dl>
 </dd>
+<dt id="PyPartMC.CampCore"><code class="flex name class">
+<span>class <span class="ident">CampCore</span></span>
+<span>(</span><span>...)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>An interface between PartMC and the CAMP</p>
+<p><strong>init</strong>(self: _PyPartMC.CampCore) -&gt; None</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pybind11_builtins.pybind11_object</li>
+</ul>
+</dd>
 <dt id="PyPartMC.EnvState"><code class="flex name class">
 <span>class <span class="ident">EnvState</span></span>
 <span>(</span><span>...)</span>
@@ -366,6 +390,14 @@ scenario_t.</p>
 </ul>
 <h3>Instance variables</h3>
 <dl>
+<dt id="PyPartMC.EnvState.height"><code class="name">var <span class="ident">height</span></code></dt>
+<dd>
+<div class="desc"><p>(arg0: _PyPartMC.EnvState) -&gt; float</p></div>
+</dd>
+<dt id="PyPartMC.EnvState.pressure"><code class="name">var <span class="ident">pressure</span></code></dt>
+<dd>
+<div class="desc"><p>(arg0: _PyPartMC.EnvState) -&gt; float</p></div>
+</dd>
 <dt id="PyPartMC.EnvState.rh"><code class="name">var <span class="ident">rh</span></code></dt>
 <dd>
 <div class="desc"><p>returns the current relative humidity of the environment state</p></div>
@@ -421,6 +453,18 @@ it. This will be the case for new \c gas_state_t structures.</p>
 <li>pybind11_builtins.pybind11_object</li>
 </ul>
 </dd>
+<dt id="PyPartMC.Photolysis"><code class="flex name class">
+<span>class <span class="ident">Photolysis</span></span>
+<span>(</span><span>...)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>PartMC interface to a photolysis module</p>
+<p><strong>init</strong>(self: _PyPartMC.Photolysis) -&gt; None</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pybind11_builtins.pybind11_object</li>
+</ul>
+</dd>
 <dt id="PyPartMC.RunPartOpt"><code class="flex name class">
 <span>class <span class="ident">RunPartOpt</span></span>
 <span>(</span><span>...)</span>
@@ -469,6 +513,8 @@ aero_dist_interp_1d(), respectively.</p>
 <li><code><a title="PyPartMC.diam2rad" href="#PyPartMC.diam2rad">diam2rad</a></code></li>
 <li><code><a title="PyPartMC.histogram_1d" href="#PyPartMC.histogram_1d">histogram_1d</a></code></li>
 <li><code><a title="PyPartMC.histogram_2d" href="#PyPartMC.histogram_2d">histogram_2d</a></code></li>
+<li><code><a title="PyPartMC.loss_rate" href="#PyPartMC.loss_rate">loss_rate</a></code></li>
+<li><code><a title="PyPartMC.loss_rate_dry_dep" href="#PyPartMC.loss_rate_dry_dep">loss_rate_dry_dep</a></code></li>
 <li><code><a title="PyPartMC.pow2_above" href="#PyPartMC.pow2_above">pow2_above</a></code></li>
 <li><code><a title="PyPartMC.rad2diam" href="#PyPartMC.rad2diam">rad2diam</a></code></li>
 <li><code><a title="PyPartMC.run_part" href="#PyPartMC.run_part">run_part</a></code></li>
@@ -520,8 +566,13 @@ aero_dist_interp_1d(), respectively.</p>
 </ul>
 </li>
 <li>
+<h4><code><a title="PyPartMC.CampCore" href="#PyPartMC.CampCore">CampCore</a></code></h4>
+</li>
+<li>
 <h4><code><a title="PyPartMC.EnvState" href="#PyPartMC.EnvState">EnvState</a></code></h4>
 <ul class="">
+<li><code><a title="PyPartMC.EnvState.height" href="#PyPartMC.EnvState.height">height</a></code></li>
+<li><code><a title="PyPartMC.EnvState.pressure" href="#PyPartMC.EnvState.pressure">pressure</a></code></li>
 <li><code><a title="PyPartMC.EnvState.rh" href="#PyPartMC.EnvState.rh">rh</a></code></li>
 <li><code><a title="PyPartMC.EnvState.set_temperature" href="#PyPartMC.EnvState.set_temperature">set_temperature</a></code></li>
 <li><code><a title="PyPartMC.EnvState.temp" href="#PyPartMC.EnvState.temp">temp</a></code></li>
@@ -532,6 +583,9 @@ aero_dist_interp_1d(), respectively.</p>
 </li>
 <li>
 <h4><code><a title="PyPartMC.GasState" href="#PyPartMC.GasState">GasState</a></code></h4>
+</li>
+<li>
+<h4><code><a title="PyPartMC.Photolysis" href="#PyPartMC.Photolysis">Photolysis</a></code></h4>
 </li>
 <li>
 <h4><code><a title="PyPartMC.RunPartOpt" href="#PyPartMC.RunPartOpt">RunPartOpt</a></code></h4>
